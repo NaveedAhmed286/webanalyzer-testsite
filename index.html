@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WebAnalyzer Test Site</title>
+    <!-- 
+        INTENTIONAL ISSUES FOR TESTING:
+        =================================
+        SEO ISSUES:
+        - Missing meta description
+        - Missing viewport meta tag
+        - Missing Open Graph tags
+        - No canonical URL
+        - H2 used instead of H1
+        
+        ACCESSIBILITY ISSUES:
+        - Images missing alt text
+        - Low contrast text
+        - Missing ARIA labels
+        
+        PERFORMANCE ISSUES:
+        - Oversized images
+        - Missing width/height on images
+        - No lazy loading
+        
+        SECURITY ISSUES:
+        - Inline JavaScript
+        - Console.log in production
+        - Hardcoded credentials
+        - Inline event handlers
+    -->
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            margin: 0; 
+            padding: 20px; 
+            line-height: 1.6;
+        }
+        .header {
+            background: #f4f4f4;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        h2 { 
+            color: #333; 
+            /* ISSUE: Should be H1 for main heading */
+        }
+        .low-contrast { 
+            color: #ddd; 
+            background: white; 
+            padding: 10px;
+            /* ISSUE: Contrast ratio too low for accessibility */
+        }
+        .large-img { 
+            width: 100%; 
+            /* ISSUE: No width/height attributes, no lazy loading */
+        }
+        .content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h2>Welcome to My Test Site</h2>
+        <!-- ISSUE: H2 used as main heading instead of H1 -->
+        
+        <nav>
+            <a href="#" onclick="trackClick('home')">Home</a> |
+            <a href="#" onclick="trackClick('about')">About</a> |
+            <a href="#" onclick="trackClick('contact')">Contact</a>
+            <!-- ISSUE: Inline JavaScript event handlers -->
+        </nav>
+    </div>
+    
+    <div class="content">
+        <!-- ISSUE: Large unoptimized image without alt text -->
+        <img src="https://picsum.photos/2000/1500" class="large-img">
+        <!-- ISSUES: 
+             - No alt attribute (accessibility)
+             - Image too large (2000x1500 - performance)
+             - No width/height (CLS issue)
+             - No loading="lazy" 
+        -->
+        
+        <p>This is a regular paragraph with good contrast.</p>
+        
+        <p class="low-contrast">
+            This text has very low contrast and is extremely difficult to read, 
+            especially for users with visual impairments.
+        </p>
+        <!-- ISSUE: WCAG contrast ratio violation -->
+        
+        <h3>Features</h3>
+        <ul>
+            <li>Fast loading</li>
+            <li>Responsive design</li>
+            <li><a href="#" onclick="alert('Learn more')">Click here</a> to learn more</li>
+            <!-- ISSUES: 
+                 - Generic link text "Click here"
+                 - Inline JavaScript 
+            -->
+        </ul>
+        
+        <!-- ISSUE: Another image without alt text -->
+        <img src="https://picsum.photos/400/300">
+        <!-- ISSUE: Missing alt attribute -->
+        
+        <h3>Contact Us</h3>
+        <form onsubmit="submitForm(); return false;">
+            <!-- ISSUE: Inline event handler -->
+            <input type="text" placeholder="Name"><br><br>
+            <input type="email" placeholder="Email"><br><br>
+            <textarea placeholder="Message"></textarea><br><br>
+            <button type="submit" onclick="console.log('form submitted')">
+                Submit
+            </button>
+            <!-- ISSUE: Inline onclick with console.log -->
+        </form>
+    </div>
+    
+    <footer style="margin-top: 40px; padding: 20px; background: #f4f4f4; text-align: center;">
+        <p>© 2026 Test Site. All rights reserved.</p>
+        <!-- ISSUE: Inline styles instead of CSS classes -->
+    </footer>
+    
+    <script>
+        // ISSUE: Multiple security and performance issues
+        
+        // ISSUE: Console.log in production
+        console.log("Page loaded successfully");
+        console.log("User agent:", navigator.userAgent);
+        
+        // ISSUE: Hardcoded credentials (security critical)
+        var apiKey = "sk-1234567890abcdefghijklmnopqrstuvwxyz";
+        var password = "Admin123!";
+        var config = {
+            apiSecret: "shhh-this-is-secret",
+            dbPassword: "database123"
+        };
+        
+        // ISSUE: Inline JavaScript tracking function
+        function trackClick(page) {
+            console.log("User clicked: " + page);
+            // ISSUE: No error handling, console.log in production
+        }
+        
+        // ISSUE: eval usage (security risk)
+        function processData(data) {
+            eval("var result = " + data);
+            // NEVER use eval in production!
+        }
+        
+        // ISSUE: submitForm is not defined but referenced in HTML
+        // This will cause JavaScript error
+    </script>
+    
+    <!-- ISSUE: External script without integrity hash -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <!-- ISSUE: Inline style tag (should be external) -->
+    <style>
+        .footer-link { color: #999; }
+    </style>
+</body>
+</html>

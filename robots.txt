@@ -1,0 +1,3 @@
+# ISSUE: Missing sitemap reference
+User-agent: *
+Allow: /
