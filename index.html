@@ -1,5 +1,47 @@
-<!-- Preconnect for critical third-party origins -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preconnect" href="https://www.googletagmanager.com">
-<link rel="preconnect" href="https://www.google-analytics.com">
+# In your WebAnalyzer SEO analyzer module
+
+class AnchorTextAnalyzer:
+    def __init__(self):
+        self.generic_patterns = [
+            r'click\s+here',
+            r'read\s+more',
+            r'learn\s+more',
+            r'here',
+            r'this\s+link',
+            r'go\s+here',
+            r'more',
+            r'link',
+            r'this\s+page',
+            r'download',
+            r'view\s+more',
+            r'see\s+more',
+            r'find\s+out\s+more',
+            r'get\s+started',
+            r'sign\s+up',
+            r'subscribe',
+            r'follow\s+this\s+link'
+        ]
+    
+    def check_generic_anchor_text(self, soup):
+        """Check for generic anchor text in page"""
+        issues = []
+        links = soup.find_all('a', href=True)
+        
+        for link in links:
+            anchor_text = link.get_text(strip=True).lower()
+            if not anchor_text:
+                continue
+                
+            for pattern in self.generic_patterns:
+                if re.search(pattern, anchor_text):
+                    issues.append({
+                        'type': 'generic_anchor_text',
+                        'severity': 'warning',
+                        'element': str(link)[:100],
+                        'text': anchor_text,
+                        'href': link.get('href'),
+                        'recommendation': f'Replace generic text "{anchor_text}" with descriptive text that explains the link destination'
+                    })
+                    break
+        
+        return issues
