@@ -2,3 +2,4 @@
 *.log
 node_modules/
 .env
+# ISSUE: Missing dist/, build/, *.pyc, __pycache__/, .vscode/, *.sqlite
