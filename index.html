@@ -1,1 +1,74 @@
-/* AI Fix for Missing preconnect for third-party origins */
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WebAnalyzer Test</title>
+    <!-- ISSUE: Missing meta description -->
+    <!-- ISSUE: Missing viewport meta tag -->
+    <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <!-- ISSUE: OWASP A6 - Outdated jQuery 1.x (EOL, has known CVEs) -->
+    <!-- ISSUE: OWASP A2 - HTTP (not HTTPS) for script src -->
+    <!-- ISSUE: OWASP A8 - No integrity hash for CDN script -->
+</head>
+<body>
+    <h2>Welcome to the Test Site</h2>
+    <!-- ISSUE: H2 instead of H1 (SEO) -->
+
+    <img src="https://picsum.photos/2000/1500" alt="">
+    <!-- ISSUE: Empty alt (accessibility), oversized (performance) -->
+
+    <p style="color: #999; font-size: 10px;">
+        This is some very small, low-contrast text.
+    </p>
+    <!-- ISSUE: Accessibility - low contrast, small font -->
+
+    <a href="#">Click here</a><br>
+    <!-- ISSUE: Generic link text -->
+
+    <a href="https://example.com" target="_blank">Visit</a>
+    <!-- ISSUE: OWASP A3 - target="_blank" without rel="noopener noreferrer" (tabnabbing) -->
+
+    <button onclick="alert('test')">Click Me</button>
+    <!-- ISSUE: OWASP A3 - Inline event handler (XSS vector, CSP violation) -->
+
+    <div id="content"></div>
+    <script>
+        // ISSUE: OWASP A3 - innerHTML XSS vulnerability
+        // ISSUE: AST - will detect innerHTML assignment
+        var userInput = new URLSearchParams(window.location.search).get('name');
+        document.getElementById('content').innerHTML = '<p>Hello ' + userInput + '</p>';
+        
+        // ISSUE: OWASP A7 - Hardcoded API key pattern
+        var API_KEY = "sk_live_4f8a2c9d1e3b5f7a8c6d2e4f1a3b5c7d";
+        
+        // ISSUE: console.log in production (code quality)
+        console.log("Debug: API key active", API_KEY);
+        
+        // ISSUE: eval usage (OWASP A3 - Code Injection)
+        eval("var x = " + userInput + ";");
+    </script>
+    <!-- ISSUE: OWASP A5 - Missing CSP header (no nonce on script) -->
+    <!-- ISSUE: OWASP A9 - Logging sensitive data (API key in console.log) -->
+
+    <img src="http://picsum.photos/300/200">
+    <!-- ISSUE: Mixed content HTTP image (OWASP A2 - insecure transport) -->
+
+    <footer>
+        <p>Contact: info@test.com | Phone: 123-456-7890</p>
+        <!-- ISSUE: Plain email/phone (privacy/scraping) -->
+        <p>Copyright 2023</p>
+        <!-- ISSUE: Outdated year -->
+    </footer>
+
+    <script>
+        // ISSUE: OWASP A7 - Hardcoded password in source
+        var dbPassword = "admin123!";
+        
+        // ISSUE: AST - setTimeout with string (code injection)
+        setTimeout("alert('timeout')", 1000);
+        
+        // ISSUE: AST - document.write (XSS)
+        document.write("<p>Footer text</p>");
+    </script>
+</body>
+</html>
