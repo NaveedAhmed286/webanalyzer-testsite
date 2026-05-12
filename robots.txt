@@ -1,3 +1,7 @@
-# ISSUE: Missing sitemap reference
+# ISSUE: Missing Sitemap reference
+# ISSUE: Too permissive - allows all paths
+# ISSUE: No Crawl-delay setting
 User-agent: *
 Allow: /
+Disallow: /admin
+# ISSUE: /admin disallow reveals admin path existence (security through obscurity fail)
