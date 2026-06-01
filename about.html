@@ -2,47 +2,44 @@
 <html>
 <head>
     <title>About Us</title>
-    <!-- ISSUE: Missing lang, meta description, viewport, charset -->
+    <!-- SECURITY: Hardcoded token below -->
+    <script>
+        var API_KEY = "ghp_aBcDeFgHiJkLmNoPqRsTuVwXyZ1234567890";
+        var PASSWORD = "admin123";
+        // SECURITY: Dangerous eval
+        eval("alert('hello')");
+        // SECURITY: DOM XSS
+        document.write("Hash: " + location.hash);
+    </script>
+    <!-- SEO: Missing meta description, viewport, lang, charset -->
+    <!-- MOBILE: Missing viewport -->
 </head>
 <body>
+    <!-- SEO: H3 without H1/H2 -->
     <h3>About Our Company</h3>
-    <!-- ISSUE: H3 without H1/H2 (heading hierarchy) -->
 
+    <!-- ACCESSIBILITY: No alt text -->
     <img src="https://picsum.photos/800/600">
-    <!-- ISSUE: No alt text -->
 
-    <p style="font-size: 12px; color: #ccc;">
-        Low contrast inline-styled text.
-    </p>
+    <!-- ACCESSIBILITY: Low contrast -->
+    <p style="font-size: 12px; color: #ccc;">Low contrast inline-styled text with bad grammer and speling mistakes that should be detected by content analyzer when checking page text for common writing errors.</p>
 
+    <!-- LINKS: Generic anchor text -->
     <a href="index.html">Back</a>
-    <!-- ISSUE: Generic link text -->
+    
+    <!-- LINKS: Broken link -->
+    <a href="https://httpstat.us/404">click here</a>
 
-    <div onclick="location.href='page.html'">
-        Click this div to navigate
-    </div>
-    <!-- ISSUE: Div as button (AST - accessibility), inline JS (OWASP A3) -->
+    <!-- SECURITY: Div as button, inline JS -->
+    <div onclick="location.href='page.html'">Click this div to navigate</div>
 
+    <!-- CODE: Multiple br tags -->
     <br><br><br><br><br>
-    <!-- ISSUE: Multiple <br> (code quality) -->
 
+    <!-- SECURITY: GET form, no CSRF, no validation -->
     <form action="/submit" method="GET">
         <input type="text" name="query" placeholder="Search">
         <input type="submit" value="Go">
     </form>
-    <!-- ISSUE: OWASP A3 - GET method for form = data in URL -->
-    <!-- ISSUE: No CSRF token (OWASP A4) -->
-    <!-- ISSUE: No input validation attributes -->
-
-    <script>
-        // ISSUE: OWASP A7 - Hardcoded token
-        var ACCESS_TOKEN = "ghp_aBcDeFgHiJkLmNoPqRsTuVwXyZ1234567890";
-        
-        // ISSUE: AST - dangerous Function constructor
-        var fn = new Function("return " + "1+1");
-        
-        // ISSUE: OWASP A3 - location.hash XSS
-        document.write("Hash: " + location.hash);
-    </script>
 </body>
 </html>
